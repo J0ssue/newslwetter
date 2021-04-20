@@ -21,17 +21,17 @@
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     if (!emailValidator.test(email.value)) {
-      alert("please enter valid email");
+      alert("WARNING: please enter valid email");
       return;
     }
     if (email.value.length > 0) {
       if (hasNewsletters() > 0) {
         handleSubmission(email.value);
       } else {
-        alert("please select a newsletter");
+        alert("ERROR: please select a newsletter");
       }
     } else {
-      alert("please enter email");
+      alert("ERRO: please enter email");
     }
   });
 
@@ -82,17 +82,20 @@
    * Handles form submission
    */
   function handleSubmission(emailValue) {
-    newslettersToReceive.email = emailValue;
-    newslettersToReceive.hasFutureNewsletter = agreementCheckbox.checked;
-    newsletters.forEach((newsletter) => {
-      if (newsletter.querySelector("input").checked) {
-        addNewsletter(
-          newsletter.querySelector("h3").innerText,
-          newsletter.querySelector("p").innerText
-        );
-      }
-    });
-    alert(JSON.stringify(newslettersToReceive, null, 4));
-    form.reset();
+    const id = setTimeout(() => {
+      newslettersToReceive.email = emailValue;
+      newslettersToReceive.hasFutureNewsletter = agreementCheckbox.checked;
+      newsletters.forEach((newsletter) => {
+        if (newsletter.querySelector("input").checked) {
+          addNewsletter(
+            newsletter.querySelector("h3").innerText,
+            newsletter.querySelector("p").innerText
+          );
+        }
+      });
+      alert("SUCCESS:" + JSON.stringify(newslettersToReceive, null, 4));
+      form.reset();
+      clearTimeout(id);
+    }, 2000);
   }
 })();
