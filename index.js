@@ -7,15 +7,16 @@
   const emailValidator = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
   const newslettersToReceive = {
     email: "",
+    hasFutureNewsletter: false,
     newsletters: [],
   };
 
   /**
    * Add event Listeners
    */
-  agreementCheckbox.addEventListener("change", (e) => {
-    handleEnableSubmitButton(e.target.checked);
-  });
+  // agreementCheckbox.addEventListener("change", (e) => {
+  //   handleEnableSubmitButton(e.target.checked);
+  // });
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -82,6 +83,7 @@
    */
   function handleSubmission(emailValue) {
     newslettersToReceive.email = emailValue;
+    newslettersToReceive.hasFutureNewsletter = agreementCheckbox.checked;
     newsletters.forEach((newsletter) => {
       if (newsletter.querySelector("input").checked) {
         addNewsletter(
@@ -91,7 +93,6 @@
       }
     });
     alert(JSON.stringify(newslettersToReceive, null, 4));
-    toggleSubmitButton();
     form.reset();
   }
 })();
